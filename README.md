@@ -6,7 +6,7 @@ The Goal: Inventory drop pools which can be split/claimed by players. The drop p
 
 As the numbers will be varied, emotes, while a good idea, might have to be put to the side in favour of the classic ` $claim [number] ` format.
 
-# The Steps?
+# What do?
 
 Scenario: People have killed a bunch of monsters. There's a large loot list of things, and people need an easy way to tick off or claim items from the 15/20 items and to split the currency evenly.
 
