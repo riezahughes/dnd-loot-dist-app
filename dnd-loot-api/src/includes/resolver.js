@@ -6,9 +6,12 @@ const resolver = {
   Query: {
     party: () => books,
   },
-  Mutations: {
-      party: (args) => 
-  }
+  Mutation: {
+    createParty: (_, args, context) => ({
+      id: 1,
+      name: args.name,
+    }),
+  },
 };
 
 module.exports = resolver;
