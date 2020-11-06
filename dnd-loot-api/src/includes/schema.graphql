@@ -1,0 +1,32 @@
+type Party {
+    id: ID!
+    name: String!
+}
+
+type Player{
+    id: ID!
+    name: String!
+    discord_Id: String!
+    party_id: Party!
+}
+
+type Loot{
+    id: ID!,
+    name: String!
+    party_id: Party!
+}
+
+type Item{
+    id: ID!
+    name: String!
+    claimed_by: Player
+    loot_id: Loot!
+}
+
+type Query{
+    party(id: ID!): Party
+}
+
+type Mutation{
+    createParty(name: String!): Party
+}

@@ -23,6 +23,11 @@ exports.up = (pgm) => {
       references: '"party"',
       onDelete: 'cascade',
     },
+    createdAt: {
+      type: 'timestamp',
+      notNull: true,
+      default: pgm.func('current_timestamp'),
+    },
   });
 
   pgm.createTable('loot', {
@@ -33,6 +38,11 @@ exports.up = (pgm) => {
       notNull: true,
       references: '"party"',
       onDelete: 'cascade',
+    },
+    createdAt: {
+      type: 'timestamp',
+      notNull: true,
+      default: pgm.func('current_timestamp'),
     },
   });
 
@@ -50,6 +60,11 @@ exports.up = (pgm) => {
       references: '"loot"',
       onDelete: 'cascade',
       referencesConstraintName: 'loot pool',
+    },
+    createdAt: {
+      type: 'timestamp',
+      notNull: true,
+      default: pgm.func('current_timestamp'),
     },
   });
 
