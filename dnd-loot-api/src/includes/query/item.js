@@ -6,4 +6,15 @@ const itemQuery = async (_, args, context) => {
     .catch((err) => console.log(err));
 };
 
-module.exports = itemQuery;
+const itemsQuery = async (_, args, context) => {
+  const statement = 'SELECT * from item ORDER BY "id" DESC LIMIT 30';
+  const values = [args.id];
+
+  return context.pg.query(statement, values).then((res) => res.rows)
+    .catch((err) => console.log(err));
+};
+
+module.exports = {
+  itemQuery,
+  itemsQuery,
+};

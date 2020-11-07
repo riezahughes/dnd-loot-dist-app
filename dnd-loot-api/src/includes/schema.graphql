@@ -31,6 +31,7 @@ type Query{
     player(id: ID!): Player
     players(party_id: ID!): [Player]
     item(id: ID!): Player
+    items: [Item]
 }
 
 type Mutation{

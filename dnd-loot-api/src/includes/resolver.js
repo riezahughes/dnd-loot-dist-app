@@ -7,10 +7,12 @@ const partyMutation = require('./mutations/party.js');
 
 const resolver = {
   Query: {
-    party: partyQuery,
+    party: partyQuery.partyQuery,
+    parties: partyQuery.partiesQuery,
     player: playerQuery,
     loot: lootQuery,
-    item: itemQuery,
+    item: itemQuery.itemQuery,
+    items: itemQuery.itemsQuery,
   },
   Mutation: {
     createParty: partyMutation.partyCreate,
