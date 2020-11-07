@@ -1,2 +1,2 @@
-set up postgres (the docker way: `docker run --name postgres -e POSTGRES_PASSWORD=[password] -d postgres`) - this will default to user postgres with a port of 5432
+set up postgres (the docker way: `docker run --name postgres-loot -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=loot -p 5432:5432 -d postgres` ) - this will default to user postgres with a port of 5432 and a db name of loot
 run migrations: `DATABASE_URL=postgres://[user]:[pass]@[host]:[post]/[dbname] npm run migrate up`
