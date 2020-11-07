@@ -29,4 +29,6 @@ type Query{
 
 type Mutation{
     createParty(name: String!): Party
+    updateParty(id: ID! name: String!): Party
+    deleteParty(id: ID!): Party
 }
