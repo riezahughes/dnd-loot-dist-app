@@ -1,0 +1,2 @@
+set up postgres (the docker way: `docker run --name postgres -e POSTGRES_PASSWORD=[password] -d postgres`) - this will default to user postgres with a port of 5432
+run migrations: `DATABASE_URL=postgres://[user]:[pass]@[host]:[post]/[dbname] npm run migrate up`
