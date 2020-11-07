@@ -25,6 +25,12 @@ type Item{
 
 type Query{
     party(id: ID!): Party
+    parties: [Party]
+    loot(id: ID!): Loot
+    lootpool: [loot]
+    player(id: ID!) Player
+    players(party_id: ID!): [Player]
+    item(id: ID!) Player
 }
 
 type Mutation{
