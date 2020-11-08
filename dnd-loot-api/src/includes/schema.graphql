@@ -2,6 +2,7 @@ type Party {
     id: ID!
     name: String!
     players: [Player]
+    loot: [Loot]
 }
 
 type Player{
