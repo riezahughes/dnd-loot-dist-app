@@ -6,4 +6,14 @@ const lootQuery = async (_, args, context) => {
     .catch((err) => console.log(err));
 };
 
-module.exports = lootQuery;
+const lootpoolQuery = async (_, args, context) => {
+  const statement = 'SELECT * from  loot WHERE "id" = $1';
+
+  return context.pg.query(statement).then((res) => res.rows)
+    .catch((err) => console.log(err));
+};
+
+module.exports = {
+  lootQuery,
+  lootpoolQuery,
+};

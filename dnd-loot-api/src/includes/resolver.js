@@ -4,13 +4,16 @@ const lootQuery = require('./query/loot');
 const itemQuery = require('./query/item');
 
 const partyMutation = require('./mutations/party.js');
+const playerMutation = require('./mutations/player');
 
 const resolver = {
   Query: {
     party: partyQuery.partyQuery,
     parties: partyQuery.partiesQuery,
-    player: playerQuery,
-    loot: lootQuery,
+    player: playerQuery.playerQuery,
+    players: playerQuery.playersQuery,
+    loot: lootQuery.lootQuery,
+    lootpool: lootQuery.lootpoolQuery,
     item: itemQuery.itemQuery,
     items: itemQuery.itemsQuery,
   },
@@ -18,6 +21,9 @@ const resolver = {
     createParty: partyMutation.partyCreate,
     updateParty: partyMutation.partyUpdate,
     deleteParty: partyMutation.partyDelete,
+    createPlayer: playerMutation.playerCreate,
+    updatePlayer: playerMutation.playerUpdate,
+    deletePlayer: playerMutation.playerDelete,
   },
 };
 

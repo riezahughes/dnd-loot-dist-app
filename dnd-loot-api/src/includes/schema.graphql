@@ -1,26 +1,39 @@
 type Party {
     id: ID!
     name: String!
+    players: [Player]
 }
 
 type Player{
     id: ID!
     name: String!
-    discord_Id: String!
-    party_id: Party!
+    discord_id: String!
+    party_id: ID!
 }
 
 type Loot{
     id: ID!,
     name: String!
     party_id: Party!
+    items: [Item]
 }
+
+
+input LootInput{
+    name: String!
+    items: [ItemInput]
+}
+
 
 type Item{
     id: ID!
     name: String!
     claimed_by: Player
     loot_id: Loot!
+}
+
+input ItemInput{
+    name: String!
 }
 
 type Query{
@@ -38,4 +51,19 @@ type Mutation{
     createParty(name: String!): Party
     updateParty(id: ID! name: String!): Party
     deleteParty(id: ID!): Party
+
+    createPlayer(name: String!, discord_id: String!, party_id: ID!): Player
+    updatePlayer(id: ID!, party: ID!, name: String,, discord_id: String): Player
+    deletePlayer(player_id: ID!, party_id: ID!): Player
+
+    createLoot( party_id: String!, items: [ItemInput] ): Loot
+    updateLoot( id: ID!, items: [ItemInput]): Loot
+    deleteLoot( id: ID!): Loot
+
+    addItem( loot_id: ID!, name: String!): Item
+    updateItem( id: ID!, name: String ): Item
+    deleteItem( loot_id: ID!, item_id: ID!): Item
+
+    claimItem( id: ID!, claimed_by: ID!): Item
+    unclaimItem( id: ID!): Item
 }
