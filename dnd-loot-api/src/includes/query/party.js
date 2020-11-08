@@ -33,9 +33,21 @@ const partyQuery = async (_, args, context) => {
 };
 
 const partiesQuery = async (_, args, context) => {
-  const statement = 'SELECT * from party ORDER BY "id" DESC LIMIT 30';
+  const statement = {
+    text: 'SELECT * from party INNER JOIN player ON party."id" = player."party_id" ORDER BY party."id" DESC LIMIT 30',
+    rowMode: 'array',
+  };
 
-  return context.pg.query(statement).then((res) => res.rows)
+  return context.pg.query(statement).then((res) => {
+    returnArray = [];
+
+    for (party in res.rows) {
+
+    }
+
+    console.log(res.rows);
+    return res.rows;
+  })
     .catch((err) => console.log(err));
 };
 
