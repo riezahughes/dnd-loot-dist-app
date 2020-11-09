@@ -2,24 +2,25 @@ const partyQuery = async (_, args, context) => {
   const statement = {
     text: `
     SELECT
-      party.*,
-      row_to_json(player.*) as player
+      party.* AS party,
+      json_agg(player) AS player,
+      json_agg(loot) AS loot
     FROM party
-    INNER JOIN player ON player."party_id" = party."id" WHERE party."id" = $1
-    ORDER BY player.id DESC`,
+    FULL JOIN loot ON party."id" = loot."party_id"
+    INNER JOIN player ON party."id" = player."party_id" WHERE party."id" = $1
+    GROUP BY party."id"`,
     values: [args.id],
   };
 
   return context.pg.query(statement).then((res) => {
-    console.log(res.rows[0].player), { depth: null };
+    console.log(res.rows[0], { depth: null });
     // console.dir(res.rows[0].player, { depth: null })
     return ({
       id: res.rows[0].id,
       name: res.rows[0].name,
       createdAt: res.rows[0].createdAt,
-      players: [
-        res.rows[0].player
-      ]
+      players: res.rows[0].player,
+      loot: res.rows[0].loot
     });
   })
     .catch((err) => console.log(err));
