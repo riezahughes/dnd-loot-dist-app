@@ -15,7 +15,7 @@ type Player{
 type Loot{
     id: ID!,
     name: String!
-    party_id: Party!
+    party_id: ID!
     items: [Item]
 }
 
@@ -57,7 +57,7 @@ type Mutation{
     updatePlayer(id: ID!, party: ID!, name: String,, discord_id: String): Player
     deletePlayer(player_id: ID!, party_id: ID!): Player
 
-    createLoot( party_id: String!, items: [ItemInput] ): Loot
+    createLoot( name: String!, party_id: ID!, items: [ItemInput] ): Loot
     updateLoot( id: ID!, items: [ItemInput]): Loot
     deleteLoot( id: ID!): Loot
 

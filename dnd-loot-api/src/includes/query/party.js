@@ -3,12 +3,13 @@ const partyQuery = async (_, args, context) => {
     text: `
     SELECT
       party.* AS party,
-      json_agg(player) AS player,
-      json_agg(loot) AS loot
+      json_agg(DISTINCT player) AS player,
+      json_agg(DISTINCT loot) AS loot
     FROM party
-    FULL JOIN loot ON party."id" = loot."party_id"
-    INNER JOIN player ON party."id" = player."party_id" WHERE party."id" = $1
-    GROUP BY party."id"`,
+    INNER JOIN player ON party."id" = player."party_id"
+    LEFT JOIN loot ON party."id" = loot."party_id"
+    WHERE party."id" = $1
+    GROUP BY party.id`,
     values: [args.id],
   };
 
