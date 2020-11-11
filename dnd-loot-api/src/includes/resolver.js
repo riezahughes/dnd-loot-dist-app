@@ -6,7 +6,7 @@ const itemQuery = require('./query/item');
 const partyMutation = require('./mutations/party.js');
 const playerMutation = require('./mutations/player');
 const lootMutation = require('./mutations/loot');
-const itemMutation = require('./mutations/item')
+const itemMutation = require('./mutations/item');
 
 const resolver = {
   Query: {
@@ -33,7 +33,7 @@ const resolver = {
     updateItem: itemMutation.itemUpdate,
     deleteItem: itemMutation.itemDelete,
     claimItem: itemMutation.itemClaim,
-    unclaimItem: itemMutation.itemUnclaim
+    unclaimItem: itemMutation.itemUnclaim,
   },
 };
 

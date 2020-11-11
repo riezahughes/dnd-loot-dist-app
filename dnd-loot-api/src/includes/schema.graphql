@@ -22,6 +22,7 @@ type Loot{
 
 input LootInput{
     name: String!
+    party_id: ID!
     items: [ItemInput]
 }
 
@@ -29,12 +30,13 @@ input LootInput{
 type Item{
     id: ID!
     name: String!
-    claimed_by: Player
-    loot_id: Loot!
+    claimed_by: ID
+    loot_id: ID!
 }
 
 input ItemInput{
     name: String!
+    loot_id: ID!
 }
 
 type Query{

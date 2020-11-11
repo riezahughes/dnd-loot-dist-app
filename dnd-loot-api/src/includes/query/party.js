@@ -1,41 +1,53 @@
 const partyQuery = async (_, args, context) => {
   const statement = {
     text: `
-    SELECT
-      party.* AS party,
-      json_agg(DISTINCT player) AS player,
-      json_agg(DISTINCT loot) AS loot
-    FROM party
-    INNER JOIN player ON party."id" = player."party_id"
-    LEFT JOIN loot ON party."id" = loot."party_id"
-    WHERE party."id" = $1
-    GROUP BY party.id`,
+    select
+    json_build_object(
+            'id', u.id,
+            'name', u.name,
+            'players', json_build_object(
+                    'id', ur.id,
+                    'name', ur.name,
+                    'party_id', u.id,
+                    'discord_id', ur.discord_id
+            ),
+            'loot', json_build_object(
+                    'id', d.id,
+                    'name', d.name,
+                    'party_id', u.id,
+                    'items', json_build_object(
+                      'id', e.id,
+                      'name', e.name,
+                      'claimed_by', e.claimed_by,
+                      'loot_id', d.id
+                    )
+            )
+            
+  )
+  from party u
+  inner join player ur on ur.party_id = u.id
+  left join loot d on d.party_id = u.id
+  full join item e on e.loot_id = d.id
+  WHERE u.id = $1
+  `,
     values: [args.id],
   };
 
   return context.pg.query(statement).then((res) => {
-    console.log(res.rows[0], { depth: null });
-    // console.dir(res.rows[0].player, { depth: null })
-    return ({
-      id: res.rows[0].id,
-      name: res.rows[0].name,
-      createdAt: res.rows[0].createdAt,
-      players: res.rows[0].player,
-      loot: res.rows[0].loot
-    });
+    console.log(res.rows[0].json_build_object, { depth: null });
+    return res.rows[0].json_build_object;
   })
     .catch((err) => console.log(err));
 };
 
 const partiesQuery = async (_, args, context) => {
-
   const returnArray = async (parties) => {
-    let partyArray = [];
+    const partyArray = [];
     for (let x = 0; x < parties.rows.length; x++) {
       // console.log(res.rows);
       const playerStatement = {
-        text: `SELECT * FROM player WHERE "party_id" = $1 ORDER BY "id" DESC LIMIT 30`,
-        values: [parties.rows[x].id]
+        text: 'SELECT * FROM player WHERE "party_id" = $1 ORDER BY "id" DESC LIMIT 30',
+        values: [parties.rows[x].id],
       };
       // get players via party_id
       await context.pg.query(playerStatement).then((result) => {
@@ -45,28 +57,25 @@ const partiesQuery = async (_, args, context) => {
           name: parties.rows[x].name,
           createdAt: parties.rows[x].createdAt,
           players: result.rows,
-        })
+        });
       });
 
       if (x + 1 === parties.rows.length) {
         console.log(partyArray);
         return partyArray;
       }
-
     }
-  }
+  };
 
   const statement = {
     text: 'SELECT * from party ORDER BY "id" DESC LIMIT 30',
   };
 
-  let finalArray = [];
+  const finalArray = [];
   // get all rows for party.
-  return context.pg.query(statement).then(async (res) => {
+  return context.pg.query(statement).then(async (res) =>
     // for each party
-    return await returnArray(res);
-
-  }).then((res) => { return res }).catch((err) => console.log(err));
+    await returnArray(res)).then((res) => res).catch((err) => console.log(err));
 };
 
 module.exports = {
