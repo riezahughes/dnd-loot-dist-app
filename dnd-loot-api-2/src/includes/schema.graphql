@@ -37,7 +37,7 @@ type Item{
     id: Int!
     item_name: String!
     claimed_by: ID
-    loot: LootPool!
+    lootpool: LootPool!
 }
 
 input ItemInput{
@@ -63,10 +63,10 @@ type Mutation{
 
     createPlayer(name: String!, discord_id: String!, party: Int!): Player
     updatePlayer(id: Int!, party: Int!, name: String,, discord_id: String): Player
-    deletePlayer(player_id: Int!, party_id: Int!): Player
+    deletePlayer(id: Int!): Player
 
     createLoot( name: String!, party_id: Int!, items: [ItemInput] ): LootPool
-    updateLoot( id: Int!, items: [ItemInput]): LootPool
+    updateLoot( id: Int!, name: String items: [ItemInput]): LootPool
     deleteLoot( id: Int!): LootPool
 
     addItem( loot_id: Int!, name: String!): Item

@@ -3,6 +3,7 @@ const partyCreate = async (_, args, context) => {
     data: {
       party_name: args.name,
     },
+    include: { loot: true, players: true }
   })
 };
 
@@ -16,6 +17,7 @@ const partyUpdate = async (_, args, context) => {
     where: {
       id: args.id,
     },
+    include: { loot: true, players: true }
   })
 };
 
@@ -24,6 +26,7 @@ const partyDelete = async (_, args, context) => {
     where: {
       id: args.id,
     },
+    include: { loot: true, players: true }
   })
 };
 

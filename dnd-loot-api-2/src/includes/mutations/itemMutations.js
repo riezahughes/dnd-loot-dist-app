@@ -1,8 +1,13 @@
 const itemCreate = async (_, args, context) => {
   return context.prisma.item.create({
     data: {
-      name: args.name,
+      lootpool: {
+        connect: { id: args.loot_id }
+      },
+      item_name: args.name,
+      claimed_by: ""
     },
+    include: { lootpool: true }
   })
 };
 

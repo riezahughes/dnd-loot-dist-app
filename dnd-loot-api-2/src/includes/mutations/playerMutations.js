@@ -20,7 +20,7 @@ const playerUpdate = async (_, args, context) => {
       discord_id: args.discord_id,
     },
     where: {
-      id: args.id,
+      id: args.id, 
     },
     include: { party: true }
   })  
@@ -31,6 +31,7 @@ const playerDelete = async (_, args, context) => {
     where: {
       id: args.id,
     },
+    include: { party: true }
   })
 };
 

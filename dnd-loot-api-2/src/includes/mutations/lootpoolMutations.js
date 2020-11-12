@@ -1,29 +1,36 @@
 const lootpoolCreate = async (_, args, context) => {
-  return context.prisma.lootpool.create({
+  return context.prisma.lootPool.create({
     data: {
-      name: args.name,
+      lootpool_name: args.name,
+      party: {
+        connect: { id: args.party_id }
+      },
+      items: args.items,
     },
+    include: { party: true, items: true }
   })
 };
 
 const lootpoolUpdate = async (_, args, context) => {
-  return context.prisma.race.update({
+  return context.prisma.lootPool.update({
     data: {
-      name: args.name,
+      lootpool_name: args.name,
       players: args.players,
-      loot: args.loot
+      items: args.items
     },
     where: {
       id: args.id,
     },
+    include: { party: true, items: true }
   })
 };
 
 const lootpoolDelete = async (_, args, context) => {
-  return context.prisma.lootpool.delete({
+  return context.prisma.lootPool.delete({
     where: {
       id: args.id,
     },
+    include: { party: true, items: true }
   })
 };
 
