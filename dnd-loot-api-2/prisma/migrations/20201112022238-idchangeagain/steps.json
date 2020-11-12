@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Player",
+      "field": "party",
+      "type": "Party",
+      "arity": "Optional"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Player",
+      "field": "party_id"
+    }
+  ]
+}

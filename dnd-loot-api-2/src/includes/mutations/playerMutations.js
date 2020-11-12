@@ -1,0 +1,40 @@
+const playerCreate = async (_, args, context) => {
+  return context.prisma.player.create({
+    data: {
+      player_name: args.name,
+      discord_id: args.discord_id,
+      party: args.party_id
+    },
+  })
+};
+
+//add party via foreign key correctly then you're golden.
+
+const playerUpdate = async (_, args, context) => {
+  return context.prisma.race.update({
+    data: {
+      player_name: args.name,
+      discord_id: args.discord_id,
+      players: args.players,
+      loot: args.loot
+    },
+    where: {
+      id: args.id,
+    },
+  }) 
+};
+
+const playerDelete = async (_, args, context) => {
+  return context.prisma.player.delete({
+    where: {
+      id: args.id,
+    },
+  })
+};
+
+
+module.exports = {
+  playerCreate,
+  playerUpdate,
+  playerDelete,
+};

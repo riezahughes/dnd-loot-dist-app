@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Party {
+  id          Int      @default(autoincrement()) @id
+  createdAt   DateTime @default(now())
+  party_name  String?
+  players     Player[]
+  loot        LootPool[]
+}
+
+model Player {
+  id           Int @default(autoincrement()) @id
+  createdAt    DateTime @default(now())
+  player_name  String?
+  discord_id   String?
+  party_id     Party?
+}
+model LootPool {
+  id             Int      @default(autoincrement()) @id
+  createdAt      DateTime @default(now())
+  lootpool_name  String?
+  items          Item[]
+  party          Party?
+}
+
+model Item {
+  id          Int      @default(autoincrement()) @id
+  createdAt      DateTime @default(now())
+  item_name   String?
+  claimed_by  String
+  lootPool    LootPool?
+}
