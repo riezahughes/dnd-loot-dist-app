@@ -6,9 +6,9 @@ const itemMutations = require('./mutations/itemMutations');
 
 const resolver = {
   Query: {
-    party: (_, args, context) => context.prisma.party.findOne({ where: { id: args.id },  include: { lootpools: true, players: true, items: true }  }),
+    party: (_, args, context) => context.prisma.party.findOne({ where: { id: args.id },  include: { lootpools: true, players: true }  }),
     parties: (_, args, context) => context.prisma.party.findMany({include: { lootpools: true, players: true, items: true }}),
-    player: (_, args, context) => context.prisma.player.findOne({ where: { id: args.id } , include: { party: true, lootpools: true } }),
+    player: (_, args, context) => context.prisma.player.findOne({ where: { id: args.id }, include: { party: true } }),
     players: (_, args, context) => context.prisma.player.findMany({include: { party: true }}),
     lootpool: (_, args, context) => context.prisma.lootPool.findOne({ where: { id: args.id }, include: { party: true, items: true } }),
     lootpools: (_, args, context) => context.prisma.lootPool.findMany({ include: { party: true, items: true } }),
