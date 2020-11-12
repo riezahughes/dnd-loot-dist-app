@@ -1,0 +1,17 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Party",
+      "field": "lootpools",
+      "type": "LootPool",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Party",
+      "field": "loot"
+    }
+  ]
+}

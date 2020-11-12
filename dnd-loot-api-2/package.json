@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "reset": "node prismaReset.js"
   },
   "dependencies": {
     "@prisma/client": "^2.11.0",

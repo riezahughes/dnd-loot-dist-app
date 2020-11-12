@@ -3,8 +3,11 @@ const playerCreate = async (_, args, context) => {
     data: {
       player_name: args.name,
       discord_id: args.discord_id,
-      party: args.party_id
+      party: {
+        connect: { id: args.party }
+      },
     },
+    include: { party: true }
   })
 };
 
@@ -12,7 +15,7 @@ const playerCreate = async (_, args, context) => {
 
 const playerUpdate = async (_, args, context) => {
   return context.prisma.race.update({
-    data: {
+    data: { 
       player_name: args.name,
       discord_id: args.discord_id,
       players: args.players,
@@ -21,7 +24,7 @@ const playerUpdate = async (_, args, context) => {
     where: {
       id: args.id,
     },
-  }) 
+  })  
 };
 
 const playerDelete = async (_, args, context) => {
