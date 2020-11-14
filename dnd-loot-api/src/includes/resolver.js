@@ -1,39 +1,35 @@
-const partyQuery = require('./query/party');
-const playerQuery = require('./query/player');
-const lootQuery = require('./query/loot');
-const itemQuery = require('./query/item');
+const partyMutations = require('./mutations/partyMutations');
+const playerMutations = require('./mutations/playerMutations');
+const lootMutations = require('./mutations/lootpoolMutations');
+const itemMutations = require('./mutations/itemMutations');
 
-const partyMutation = require('./mutations/party.js');
-const playerMutation = require('./mutations/player');
-const lootMutation = require('./mutations/loot');
-const itemMutation = require('./mutations/item');
 
 const resolver = {
   Query: {
-    party: partyQuery.partyQuery,
-    parties: partyQuery.partiesQuery,
-    player: playerQuery.playerQuery,
-    players: playerQuery.playersQuery,
-    loot: lootQuery.lootQuery,
-    lootpool: lootQuery.lootpoolQuery,
-    item: itemQuery.itemQuery,
-    items: itemQuery.itemsQuery,
+    party: (_, args, context) => context.prisma.party.findOne({ where: { id: args.id },  include: { lootpools: true, players: true }  }),
+    parties: (_, args, context) => context.prisma.party.findMany({include: { lootpools: true, players: true, items: true }}),
+    player: (_, args, context) => context.prisma.player.findOne({ where: { id: args.id }, include: { party: true } }),
+    players: (_, args, context) => context.prisma.player.findMany({include: { party: true }}),
+    lootpool: (_, args, context) => context.prisma.lootPool.findOne({ where: { id: args.id }, include: { party: true, items: true } }),
+    lootpools: (_, args, context) => context.prisma.lootPool.findMany({ include: { party: true, items: true } }),
+    item: (_, args, context) => context.prisma.item.findOne({ where: { id: args.id }, include: { lootpool: true } }),
+    items: (_, args, context) => context.prisma.item.findMany({ include: { lootpool: true }}),
   },
   Mutation: {
-    createParty: partyMutation.partyCreate,
-    updateParty: partyMutation.partyUpdate,
-    deleteParty: partyMutation.partyDelete,
-    createPlayer: playerMutation.playerCreate,
-    updatePlayer: playerMutation.playerUpdate,
-    deletePlayer: playerMutation.playerDelete,
-    createLoot: lootMutation.lootCreate,
-    updateLoot: lootMutation.lootUpdate,
-    deleteLoot: lootMutation.lootDelete,
-    addItem: itemMutation.itemCreate,
-    updateItem: itemMutation.itemUpdate,
-    deleteItem: itemMutation.itemDelete,
-    claimItem: itemMutation.itemClaim,
-    unclaimItem: itemMutation.itemUnclaim,
+    createParty: partyMutations.partyCreate,
+    updateParty: partyMutations.partyUpdate,
+    deleteParty: partyMutations.partyDelete,
+    createPlayer: playerMutations.playerCreate,
+    updatePlayer: playerMutations.playerUpdate,
+    deletePlayer: playerMutations.playerDelete,
+    createLoot: lootMutations.lootpoolCreate,
+    updateLoot: lootMutations.lootpoolUpdate,
+    deleteLoot: lootMutations.lootpoolDelete,
+    addItem: itemMutations.itemCreate,
+    updateItem: itemMutations.itemUpdate,
+    deleteItem: itemMutations.itemDelete,
+    claimItem: itemMutations.itemClaim,
+    unclaimItem: itemMutations.itemUnclaim,
   },
 };
 

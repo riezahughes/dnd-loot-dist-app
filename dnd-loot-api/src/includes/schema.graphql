@@ -1,37 +1,43 @@
 type Party {
-    id: ID!
-    name: String!
+    id: Int!
+    party_name: String!
     players: [Player]
-    loot: [Loot]
+    lootpools: [LootPool]
 }
 
 type Player{
-    id: ID!
-    name: String!
+    id: Int!
+    player_name: String!
     discord_id: String!
-    party_id: ID!
+    party: Party!
 }
 
-type Loot{
-    id: ID!,
+input PlayerInput{
     name: String!
-    party_id: ID!
+    discord_id: String!
+    party_id: String!
+}
+
+type LootPool{
+    id: Int!
+    lootpool_name: String!
+    party: Party!
     items: [Item]
 }
 
 
 input LootInput{
     name: String!
-    party_id: ID!
+    party: ID!
     items: [ItemInput]
 }
 
 
 type Item{
-    id: ID!
-    name: String!
+    id: Int!
+    item_name: String!
     claimed_by: ID
-    loot_id: ID!
+    lootpool: LootPool!
 }
 
 input ItemInput{
@@ -40,33 +46,33 @@ input ItemInput{
 }
 
 type Query{
-    party(id: ID!): Party
+    party(id: Int!): Party
     parties: [Party]
-    loot(id: ID!): Loot
-    lootpool: [Loot]
-    player(id: ID!): Player
-    players(party_id: ID!): [Player]
-    item(id: ID!): Player
+    lootpool(id: Int!): LootPool
+    lootpools: [LootPool]
+    player(id: Int!): Player
+    players(party_id: Int!): [Player]
+    item(id: Int!): Player
     items: [Item]
 }
 
 type Mutation{
     createParty(name: String!): Party
-    updateParty(id: ID! name: String!): Party
-    deleteParty(id: ID!): Party
+    updateParty(id: Int! name: String!): Party
+    deleteParty(id: Int!): Party
 
-    createPlayer(name: String!, discord_id: String!, party_id: ID!): Player
-    updatePlayer(id: ID!, party: ID!, name: String,, discord_id: String): Player
-    deletePlayer(player_id: ID!, party_id: ID!): Player
+    createPlayer(name: String!, discord_id: String!, party: Int!): Player
+    updatePlayer(id: Int!, party: Int!, name: String,, discord_id: String): Player
+    deletePlayer(id: Int!): Player
 
-    createLoot( name: String!, party_id: ID!, items: [ItemInput] ): Loot
-    updateLoot( id: ID!, items: [ItemInput]): Loot
-    deleteLoot( id: ID!): Loot
+    createLoot( name: String!, party_id: Int!, items: [ItemInput] ): LootPool
+    updateLoot( id: Int!, name: String items: [ItemInput]): LootPool
+    deleteLoot( id: Int!): LootPool
 
-    addItem( loot_id: ID!, name: String!): Item
-    updateItem( id: ID!, name: String ): Item
-    deleteItem( loot_id: ID!, item_id: ID!): Item
+    addItem( loot_id: Int!, name: String!): Item
+    updateItem( id: Int!, name: String ): Item
+    deleteItem( loot_id: Int!, item_id: Int!): Item
 
-    claimItem( id: ID!, claimed_by: ID!): Item
-    unclaimItem( id: ID!): Item
+    claimItem( id: Int!, claimed_by: Int!): Item
+    unclaimItem( id: Int!): Item
 }

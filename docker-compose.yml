@@ -1,0 +1,35 @@
+version: '3.5'
+services:
+    api:
+        tty: true
+        container_name: blackpearl-api
+        build: 
+            context: ./dnd-loot-api/
+        networks: 
+            -  blackpearl
+        environment:
+            - PGUSER=${PGUSER}
+            - PGHOST=${PGHOST}
+            - PGPASSWORD=${PGPASSWORD}
+            - PGDATABASE=${PGDATABASE}
+            - PGPORT=${PGPORT}
+            - DATABASE_URL=${DATABASE_URL}
+        depends_on:
+            - db
+        command: echo "DATABASE_URL=\"${DATABASE_URL}\" > ./prisma/.env"
+    db:
+        image: postgres
+        hostname: postgres
+        restart: always
+        container_name: blackpearl-postgres
+        networks:
+            - blackpearl
+        environment:
+            - POSTGRES_USER=${PGUSER}
+            - POSTGRES_PASSWORD=${PGPASSWORD}
+            - POSTGRES_DB=${PGDATABASE}
+        ports:
+            - 5432
+networks: 
+    blackpearl:
+        name: blackpearl
