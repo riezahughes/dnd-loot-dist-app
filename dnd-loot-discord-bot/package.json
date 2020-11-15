@@ -2,10 +2,10 @@
   "name": "dnd-loot-discord-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "node ./src/server.js",
   "scripts": {
     "start": "node ./src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
